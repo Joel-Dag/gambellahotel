@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,9 +78,11 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[#12100E] text-[#F4EFEA] font-sans selection:bg-[#D4AF37] selection:text-[#12100E]">
-        <Navbar />
-        <div className="flex-1 flex flex-col">{children}</div>
-        <Footer />
+        <SmoothScroll>
+          <Navbar />
+          <div className="flex-1 flex flex-col">{children}</div>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );

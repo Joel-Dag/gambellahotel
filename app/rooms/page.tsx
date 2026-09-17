@@ -180,46 +180,6 @@ export default function RoomsPage() {
     },
   ];
 
-  // All Accommodations Lightbox Gallery
-  const allRoomPhotos: LightboxImage[] = [
-    {
-      src: '/hotel_photos/Bedroom1.webp',
-      title: 'Presidential Master Bedroom',
-      category: 'Bedrooms',
-      description: 'Handcrafted luxury king bed with carved headboard and ambient bedside sconces.',
-    },
-    {
-      src: '/hotel_photos/Bedroom2.webp',
-      title: 'Ambassador Bedroom Chamber',
-      category: 'Bedrooms',
-      description: 'Spacious bedroom with natural timber architecture and sunlit morning windows.',
-    },
-    {
-      src: '/hotel_photos/Bedroom3.webp',
-      title: 'Deluxe Courtyard Chamber',
-      category: 'Bedrooms',
-      description: 'Serene guest chamber designed for uncompromised quiet and restorative sleep.',
-    },
-    {
-      src: '/hotel_photos/Livingroom1.jpeg',
-      title: 'Diplomatic Living Salon',
-      category: 'Suites & Parlors',
-      description: 'Opulent living room suite with executive sofas and artisanal coffee tables.',
-    },
-    {
-      src: '/hotel_photos/Livingroom2.jpeg',
-      title: 'Residence Lounge & Parlor',
-      category: 'Suites & Parlors',
-      description: 'Refined lounge setup connecting private bedrooms with executive entertainment areas.',
-    },
-    {
-      src: '/hotel_photos/toilet.jpg',
-      title: 'Marble En-Suite Bathroom',
-      category: 'Bathrooms',
-      description: 'Pristine bathroom featuring contemporary rain shower fixtures, spotless mirrors, and luxury amenities.',
-    },
-  ];
-
   const filteredSuites = selectedFilter === 'all'
     ? suites
     : suites.filter((s) => s.category === selectedFilter);
@@ -411,9 +371,10 @@ export default function RoomsPage() {
                   </Link>
                   <button
                     onClick={() => openSuiteLightbox(suite, 0)}
-                    className="px-4 py-3 bg-[#12100E] hover:bg-[#1C1410] text-[#F4EFEA]/80 hover:text-[#D4AF37] text-xs uppercase tracking-wider rounded-sm border border-[#3D2B1F] transition-colors"
+                    className="px-5 py-3 bg-[#12100E] hover:bg-[#2A1E17] text-[#D4AF37] hover:text-[#F4EFEA] text-xs uppercase tracking-wider rounded-sm border border-[#3D2B1F] hover:border-[#C88A35] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                   >
-                    Photos ({suite.galleryImages.length})
+                    <Maximize2 className="w-3.5 h-3.5" />
+                    <span>Photos ({suite.galleryImages.length})</span>
                   </button>
                 </div>
               </div>
@@ -422,52 +383,74 @@ export default function RoomsPage() {
         </div>
       </section>
 
-      {/* Accommodations Photo Gallery Lightbox Grid */}
+      {/* Suite Comparison & Specifications Matrix (Eliminates redundant duplicate photo cards) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-[#3D2B1F]">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-xs uppercase tracking-[0.3em] text-[#D4AF37] font-semibold block mb-2">
-            Visual Exploration
+            Specifications & Comparison
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-[#F4EFEA] via-[#D4AF37] to-[#C88A35] tracking-tight">
-            Accommodations Media Gallery
+            Suite Feature Matrix
           </h2>
           <div className="h-0.5 w-16 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-4 mx-auto" />
           <p className="text-xs sm:text-sm text-[#F4EFEA]/70 font-light">
-            Click any interior photograph below to launch our high-definition room inspector.
+            Compare proportions, bespoke amenities, and private services across all accommodations.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-          {allRoomPhotos.map((photo, pIdx) => (
-            <div
-              key={photo.src}
-              onClick={() => {
-                setActiveImages(allRoomPhotos);
-                setActiveImageIndex(pIdx);
-                setLightboxOpen(true);
-              }}
-              className="group relative h-56 sm:h-64 rounded-lg overflow-hidden border border-[#3D2B1F] bg-[#1C1410] cursor-pointer shadow-[0_10px_25px_rgba(0,0,0,0.8)] hover:border-[#D4AF37]/70 transition-all"
-            >
-              <Image
-                src={photo.src}
-                alt={photo.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 768px) 50vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1410] via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
-                <span className="text-[10px] tracking-widest uppercase text-[#D4AF37] font-mono">
-                  {photo.category}
-                </span>
-                <span className="text-xs font-serif text-[#F4EFEA] font-medium">
-                  {photo.title}
-                </span>
-              </div>
-              <div className="absolute top-3 right-3 p-1.5 rounded-full bg-[#12100E]/80 text-[#F4EFEA] border border-[#3D2B1F]">
-                <Maximize2 className="w-3.5 h-3.5" />
-              </div>
-            </div>
-          ))}
+        <div className="overflow-x-auto rounded-lg border border-[#3D2B1F] bg-[#1C1410] shadow-[0_12px_35px_rgba(0,0,0,0.85)]">
+          <table className="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr className="border-b border-[#3D2B1F] bg-[#12100E] text-[#D4AF37] font-serif uppercase tracking-wider">
+                <th className="p-4 sm:p-5">Suite Tier</th>
+                <th className="p-4 sm:p-5">Dimensions</th>
+                <th className="p-4 sm:p-5">Occupancy</th>
+                <th className="p-4 sm:p-5">Terrace View</th>
+                <th className="p-4 sm:p-5">Diplomatic Escort</th>
+                <th className="p-4 sm:p-5">Rate / Night</th>
+                <th className="p-4 sm:p-5 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#3D2B1F]/60 text-[#F4EFEA]/80 font-light">
+              {suites.map((s) => (
+                <tr key={s.id} className="hover:bg-[#2A1E17]/40 transition-colors">
+                  <td className="p-4 sm:p-5 font-serif text-sm text-[#F4EFEA] font-medium">
+                    {s.name}
+                  </td>
+                  <td className="p-4 sm:p-5 font-mono text-[#D4AF37]">
+                    {s.dimensions}
+                  </td>
+                  <td className="p-4 sm:p-5">
+                    {s.occupancy}
+                  </td>
+                  <td className="p-4 sm:p-5">
+                    {s.bedType}
+                  </td>
+                  <td className="p-4 sm:p-5">
+                    {s.id === 'presidential-suite' || s.id === 'executive-diplomatic' ? (
+                      <span className="inline-flex items-center gap-1 text-emerald-400">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Included
+                      </span>
+                    ) : (
+                      <span className="text-[#F4EFEA]/40">Upon Request</span>
+                    )}
+                  </td>
+                  <td className="p-4 sm:p-5 font-mono text-sm font-semibold text-[#D4AF37]">
+                    ${s.baseRate} / night
+                  </td>
+                  <td className="p-4 sm:p-5 text-right">
+                    <Link
+                      href={`/booking?room=${encodeURIComponent(s.name)}`}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 font-serif text-[11px] uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] bg-[#12100E] hover:bg-[#2A1E17] border border-[#3D2B1F] hover:border-[#C88A35] rounded-sm transition-all"
+                    >
+                      <span>Select</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 

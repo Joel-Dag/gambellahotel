@@ -306,9 +306,18 @@ export default function HomePage() {
               <p className="text-xs sm:text-sm text-[#F4EFEA]/70 font-light leading-relaxed mb-6">
                 Guarded gates open into a secluded compound of palms, manicured lawns, and secure executive parking, guaranteeing complete privacy and seamless arrival protocols.
               </p>
-              <div className="flex items-center gap-6 text-xs text-[#D4AF37]/90 font-mono tracking-wider">
-                <span>• 24/7 Monitored Access</span>
-                <span>• Valet & Escort</span>
+              <div className="pt-6 border-t border-[#3D2B1F] flex items-center justify-between">
+                <div className="flex items-center gap-4 text-xs text-[#D4AF37]/90 font-mono tracking-wider">
+                  <span>• 24/7 Monitored Access</span>
+                  <span>• Valet & Escort</span>
+                </div>
+                <Link
+                  href="/rooms"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 font-serif text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] bg-[#12100E] hover:bg-[#2A1E17] border border-[#3D2B1F] hover:border-[#C88A35] rounded-sm transition-all"
+                >
+                  <span>Explore</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
               </div>
             </div>
           </div>
@@ -365,9 +374,18 @@ export default function HomePage() {
               <p className="text-xs sm:text-sm text-[#F4EFEA]/70 font-light leading-relaxed mb-6">
                 Shaded walkways and breezy open corridors invite you to savor the pleasant Addis Ababa climate. Connect with colleagues or unwind in peace under cooling architectural eaves.
               </p>
-              <div className="flex items-center gap-6 text-xs text-[#D4AF37]/90 font-mono tracking-wider">
-                <span>• Natural Cross-Ventilation</span>
-                <span>• Garden Views</span>
+              <div className="pt-6 border-t border-[#3D2B1F] flex items-center justify-between">
+                <div className="flex items-center gap-4 text-xs text-[#D4AF37]/90 font-mono tracking-wider">
+                  <span>• Cross-Ventilation</span>
+                  <span>• Garden Views</span>
+                </div>
+                <Link
+                  href="/dining"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 font-serif text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] bg-[#12100E] hover:bg-[#2A1E17] border border-[#3D2B1F] hover:border-[#C88A35] rounded-sm transition-all"
+                >
+                  <span>Veranda Cafe</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
               </div>
             </div>
           </div>
@@ -400,7 +418,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Interactive Suites Grid */}
+          {/* Symmetrical 3-Column Suites Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {accommodationItems.map((room, idx) => (
               <div
@@ -452,7 +470,7 @@ export default function HomePage() {
                     </div>
                     <Link
                       href={`/booking?room=${encodeURIComponent(room.title)}`}
-                      className="text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] font-medium flex items-center gap-1"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 font-serif text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] bg-[#12100E] hover:bg-[#2A1E17] border border-[#3D2B1F] hover:border-[#C88A35] rounded-sm transition-all"
                     >
                       <span>Book Suite</span>
                       <ArrowRight className="w-3 h-3" />
@@ -461,43 +479,49 @@ export default function HomePage() {
                 </div>
               </div>
             ))}
+          </div>
 
-            {/* Diplomatic Delegations Card */}
-            <div className="gsap-suite-card rounded-lg overflow-hidden border-2 border-[#3D2B1F] bg-gradient-to-br from-[#2A1E17] via-[#1C1410] to-[#12100E] p-8 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
-              <div>
-                <div className="w-10 h-10 rounded-sm bg-[#12100E] border border-[#C88A35]/40 flex items-center justify-center text-[#D4AF37] mb-6 shadow-inner">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold block mb-2">
-                  Diplomatic Delegations
-                </span>
-                <h3 className="font-serif text-2xl text-[#F4EFEA] mb-3">
-                  Full Wing & Compound Reservations
-                </h3>
-                <p className="text-xs text-[#F4EFEA]/80 leading-relaxed font-light mb-6">
-                  Traveling with an international delegation, ministry summit, or diplomatic entourage? Secure an entire private accommodation wing with dedicated executive chef and security coordination in Addis Ababa.
-                </p>
-                <ul className="space-y-2.5 text-xs text-[#F4EFEA]/70 font-light">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span>Dedicated private corridor access</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span>Executive meeting room access</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span>Direct airport escort transfer</span>
-                  </li>
-                </ul>
+          {/* Diplomatic Delegations Full-Width Executive Banner */}
+          <div className="mt-10 rounded-lg overflow-hidden border-2 border-[#3D2B1F] bg-gradient-to-r from-[#2A1E17] via-[#1C1410] to-[#12100E] p-8 sm:p-10 shadow-[0_12px_35px_rgba(0,0,0,0.85)] flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#12100E] border border-[#C88A35]/40 mb-3 text-[#D4AF37] text-[10px] uppercase tracking-[0.25em] font-semibold">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Diplomatic Delegations & Private Wings</span>
               </div>
+              <h3 className="font-serif text-2xl sm:text-3xl text-[#F4EFEA] mb-3">
+                Full Wing & Compound Reservations
+              </h3>
+              <p className="text-xs sm:text-sm text-[#F4EFEA]/80 leading-relaxed font-light mb-4">
+                Traveling with an international delegation, ministry summit, or diplomatic entourage? Secure an entire private accommodation wing with dedicated executive chef, meeting halls, and security coordination in Addis Ababa.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[#F4EFEA]/70 font-light">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
+                  <span>Private corridor access</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
+                  <span>Executive meeting salon</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
+                  <span>Direct airport escort</span>
+                </div>
+              </div>
+            </div>
 
+            <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3">
               <Link
                 href="/booking"
-                className="mt-8 w-full py-3.5 text-center font-serif text-xs uppercase tracking-[0.2em] font-semibold text-[#F4EFEA] bg-gradient-to-b from-[#3D2B1F] to-[#1C1410] border border-[#C88A35]/60 hover:border-[#D4AF37] rounded-sm transition-all shadow-lg"
+                className="px-8 py-3.5 text-center font-serif text-xs uppercase tracking-[0.2em] font-semibold text-[#F4EFEA] bg-gradient-to-b from-[#3D2B1F] to-[#1C1410] border border-[#C88A35]/60 hover:border-[#D4AF37] hover:shadow-[0_0_15px_rgba(200,138,53,0.3)] rounded-sm transition-all shadow-lg whitespace-nowrap"
               >
                 Inquire For Delegation
+              </Link>
+              <Link
+                href="/rooms"
+                className="px-8 py-3.5 text-center font-serif text-xs uppercase tracking-[0.2em] font-medium text-[#D4AF37] bg-[#12100E] hover:bg-[#1C1410] border border-[#3D2B1F] hover:border-[#C88A35]/60 rounded-sm transition-colors whitespace-nowrap"
+              >
+                View Specifications
               </Link>
             </div>
           </div>
@@ -567,12 +591,12 @@ export default function HomePage() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#3D2B1F] flex items-center justify-between text-xs">
-                  <span className="text-[#F4EFEA]/40 uppercase tracking-widest text-[10px]">
+                  <span className="text-[#D4AF37]/80 font-mono text-[11px]">
                     Table Service
                   </span>
                   <Link
                     href="/dining"
-                    className="text-[#D4AF37] hover:text-[#F4EFEA] font-medium flex items-center gap-1 uppercase tracking-wider text-[11px]"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 font-serif text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] bg-[#12100E] hover:bg-[#2A1E17] border border-[#3D2B1F] hover:border-[#C88A35] rounded-sm transition-all"
                   >
                     <span>View Menu</span>
                     <ArrowRight className="w-3 h-3" />

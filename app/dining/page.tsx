@@ -159,9 +159,9 @@ export default function DiningPage() {
               </div>
               <button
                 onClick={() => setActiveMenuTab('coffee')}
-                className="text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] font-medium flex items-center gap-1.5"
+                className="inline-flex items-center gap-1.5 px-4 py-2 font-serif text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] bg-[#12100E] hover:bg-[#2A1E17] border border-[#3D2B1F] hover:border-[#C88A35] rounded-sm transition-all w-fit cursor-pointer"
               >
-                <span>View Coffee & Pastry Menu</span>
+                <span>Coffee & Pastry Menu</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>
@@ -199,9 +199,9 @@ export default function DiningPage() {
               </div>
               <button
                 onClick={() => setActiveMenuTab('ethiopian')}
-                className="text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] font-medium flex items-center gap-1.5"
+                className="inline-flex items-center gap-1.5 px-4 py-2 font-serif text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] bg-[#12100E] hover:bg-[#2A1E17] border border-[#3D2B1F] hover:border-[#C88A35] rounded-sm transition-all w-fit cursor-pointer"
               >
-                <span>Explore Gastronomy Menu</span>
+                <span>Gastronomy Menu</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>
@@ -239,9 +239,9 @@ export default function DiningPage() {
               </div>
               <button
                 onClick={() => setActiveMenuTab('cocktails')}
-                className="text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] font-medium flex items-center gap-1.5"
+                className="inline-flex items-center gap-1.5 px-4 py-2 font-serif text-xs uppercase tracking-wider text-[#D4AF37] hover:text-[#F4EFEA] bg-[#12100E] hover:bg-[#2A1E17] border border-[#3D2B1F] hover:border-[#C88A35] rounded-sm transition-all w-fit cursor-pointer"
               >
-                <span>View Cocktail & Wine List</span>
+                <span>Cocktail & Wine List</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>

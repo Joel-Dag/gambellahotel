@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, ArrowRight, Shield, Compass, Eye, EyeOff } from 'lucide-react';
+import { Sparkles, Shield, Compass, Eye, EyeOff } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -114,13 +114,28 @@ export default function ScrollCanvasSequence() {
           anticipatePin: 1,
           scrub: 0.1,
           onUpdate: (self) => {
-            const frameVal = Math.min(
-              TOTAL_FRAMES - 1,
-              Math.max(0, Math.round(airpods.frame))
-            );
-            renderFrame(frameVal);
-            setCurrentFrame(frameVal + 1);
-            setScrollProgress(self.progress);
+            if (self.progress >= 0.99) {
+              renderFrame(TOTAL_FRAMES - 1, true);
+              setCurrentFrame(TOTAL_FRAMES);
+              setScrollProgress(1);
+            } else {
+              const frameVal = Math.min(
+                TOTAL_FRAMES - 1,
+                Math.max(0, Math.floor(airpods.frame))
+              );
+              renderFrame(frameVal);
+              setCurrentFrame(frameVal + 1);
+              setScrollProgress(self.progress);
+            }
+          },
+          onLeave: () => {
+            // Keep the last frame locked in place cleanly without turning black
+            renderFrame(TOTAL_FRAMES - 1, true);
+            setCurrentFrame(TOTAL_FRAMES);
+            setScrollProgress(1);
+          },
+          onEnterBack: () => {
+            renderFrame(TOTAL_FRAMES - 1, true);
           },
         },
       });
@@ -210,8 +225,7 @@ export default function ScrollCanvasSequence() {
           className="absolute inset-0 w-full h-full block"
         />
 
-        {/* Minimal Non-Obtrusive Vignette (Only subtle top & bottom scrims to protect contrast) */}
-        <div className="absolute inset-x-0 bottom-0 h-40 pointer-events-none bg-gradient-to-t from-[#12100E]/90 to-transparent" />
+        {/* Subtle Top Header Scrim Only (Zero bottom scrim so the canvas never turns black) */}
         <div className="absolute inset-x-0 top-0 h-24 pointer-events-none bg-gradient-to-b from-[#12100E]/70 to-transparent" />
 
         {/* Loading overlay indicator while images load */}
@@ -232,123 +246,122 @@ export default function ScrollCanvasSequence() {
           </div>
         )}
 
-        {/* Unobtrusive Bottom-Left Narrative Card (Leaves Center of Video 100% Clear) */}
-        {showOverlay && (
+        {/* Unobtrusive Bottom-Left Narrative Card (Fades cleanly near sequence completion so final frame stays clean) */}
+        {showOverlay && scrollProgress < 0.96 && (
           <div className="absolute bottom-20 left-4 sm:left-10 z-20 max-w-sm sm:max-w-md pointer-events-none transition-all duration-500">
             {/* Checkpoint 1: Frames 1-35 */}
-            <div
-              className={`transition-all duration-500 transform ${
-                isCheckpoint1
-                  ? 'opacity-100 translate-y-0 pointer-events-auto block'
-                  : 'opacity-0 translate-y-4 pointer-events-none hidden'
-              }`}
-            >
-              <div className="border border-[#C88A35]/40 bg-[#1C1410]/80 backdrop-blur-md rounded-lg p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.85)]">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12100E]/90 border border-[#C88A35]/30 mb-2.5">
-                  <Sparkles className="w-3 h-3 text-[#D4AF37]" />
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-medium">
-                    Addis Ababa Sanctuary
-                  </span>
-                </div>
-                <h1 className="font-serif text-2xl sm:text-3xl text-[#F4EFEA] leading-tight mb-2">
-                  Carved in Tradition, <br />
-                  <span className="italic text-[#D4AF37]">Crafted for Luxury</span>
-                </h1>
-                <p className="text-xs text-[#F4EFEA]/80 font-light leading-relaxed mb-4 line-clamp-2 sm:line-clamp-3">
-                  Welcome to Gambela Hotel in Addis Ababa. Experience an earthy luxury retreat shaped by Ethiopian architectural woodwork and tranquility.
-                </p>
-                <div className="flex items-center gap-3">
-                  <Link
-                    href="/rooms"
-                    className="px-4 py-2 font-serif text-[11px] tracking-[0.2em] uppercase text-[#F4EFEA] bg-[#2A1E17] border border-[#C88A35]/60 hover:border-[#D4AF37] transition-all rounded-sm"
-                  >
-                    Suites
-                  </Link>
-                  <Link
-                    href="/booking"
-                    className="px-4 py-2 font-serif text-[11px] tracking-[0.2em] uppercase text-[#D4AF37] bg-[#12100E] border border-[#3D2B1F] hover:border-[#C88A35] transition-all rounded-sm"
-                  >
-                    Reserve
-                  </Link>
+            {isCheckpoint1 && (
+              <div className="transition-all duration-500 transform opacity-100 translate-y-0 pointer-events-auto">
+                <div className="border border-[#C88A35]/40 bg-[#1C1410]/85 backdrop-blur-md rounded-lg p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.85)]">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12100E]/90 border border-[#C88A35]/30 mb-2.5">
+                    <Sparkles className="w-3 h-3 text-[#D4AF37]" />
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-medium">
+                      Addis Ababa Sanctuary
+                    </span>
+                  </div>
+                  <h1 className="font-serif text-2xl sm:text-3xl text-[#F4EFEA] leading-tight mb-2">
+                    Carved in Tradition, <br />
+                    <span className="italic text-[#D4AF37]">Crafted for Luxury</span>
+                  </h1>
+                  <p className="text-xs text-[#F4EFEA]/80 font-light leading-relaxed mb-4 line-clamp-2 sm:line-clamp-3">
+                    Welcome to Gambela Hotel in Addis Ababa. Experience an earthy luxury retreat shaped by Ethiopian architectural woodwork and tranquility.
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <Link
+                      href="/rooms"
+                      className="px-4 py-2.5 font-serif text-xs tracking-[0.18em] uppercase text-[#F4EFEA] bg-[#2A1E17] border border-[#C88A35]/60 hover:border-[#D4AF37] transition-all rounded-sm font-medium"
+                    >
+                      Suites & Quarters
+                    </Link>
+                    <Link
+                      href="/booking"
+                      className="px-4 py-2.5 font-serif text-xs tracking-[0.18em] uppercase text-[#D4AF37] bg-[#12100E] border border-[#3D2B1F] hover:border-[#C88A35] transition-all rounded-sm font-medium"
+                    >
+                      Direct Booking
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Checkpoint 2: Frames 36-75 */}
-            <div
-              className={`transition-all duration-500 transform ${
-                isCheckpoint2
-                  ? 'opacity-100 translate-y-0 pointer-events-auto block'
-                  : 'opacity-0 translate-y-4 pointer-events-none hidden'
-              }`}
-            >
-              <div className="border border-[#C88A35]/40 bg-[#1C1410]/80 backdrop-blur-md rounded-lg p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.85)]">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12100E]/90 border border-[#C88A35]/30 mb-2.5">
-                  <Shield className="w-3 h-3 text-[#D4AF37]" />
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-medium">
-                    Artisanal Wood Carving
-                  </span>
+            {isCheckpoint2 && (
+              <div className="transition-all duration-500 transform opacity-100 translate-y-0 pointer-events-auto">
+                <div className="border border-[#C88A35]/40 bg-[#1C1410]/85 backdrop-blur-md rounded-lg p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.85)]">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12100E]/90 border border-[#C88A35]/30 mb-2.5">
+                    <Shield className="w-3 h-3 text-[#D4AF37]" />
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-medium">
+                      Artisanal Wood Carving
+                    </span>
+                  </div>
+                  <h2 className="font-serif text-2xl sm:text-3xl text-[#F4EFEA] leading-tight mb-2">
+                    Architectural Elegance <br />
+                    <span className="italic text-[#D4AF37]">Meets Modern Comfort</span>
+                  </h2>
+                  <p className="text-xs text-[#F4EFEA]/80 font-light leading-relaxed mb-4 line-clamp-2 sm:line-clamp-3">
+                    Rich walnut paneling, hand-hewn ceiling timbers, and sunlit verandas overlooking lush private courtyards in Addis Ababa.
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <Link
+                      href="/rooms"
+                      className="px-4 py-2.5 font-serif text-xs tracking-[0.18em] uppercase text-[#F4EFEA] bg-[#2A1E17] border border-[#C88A35]/60 hover:border-[#D4AF37] transition-all rounded-sm font-medium"
+                    >
+                      Explore Suites
+                    </Link>
+                    <Link
+                      href="/dining"
+                      className="px-4 py-2.5 font-serif text-xs tracking-[0.18em] uppercase text-[#D4AF37] bg-[#12100E] border border-[#3D2B1F] hover:border-[#C88A35] transition-all rounded-sm font-medium"
+                    >
+                      Veranda Lounge
+                    </Link>
+                  </div>
                 </div>
-                <h2 className="font-serif text-2xl sm:text-3xl text-[#F4EFEA] leading-tight mb-2">
-                  Architectural Elegance <br />
-                  <span className="italic text-[#D4AF37]">Meets Modern Comfort</span>
-                </h2>
-                <p className="text-xs text-[#F4EFEA]/80 font-light leading-relaxed mb-4 line-clamp-2 sm:line-clamp-3">
-                  Rich walnut paneling, hand-hewn ceiling timbers, and sunlit verandas overlooking lush private courtyards in Addis Ababa.
-                </p>
-                <Link
-                  href="/rooms"
-                  className="inline-flex items-center gap-2 px-4 py-2 font-serif text-[11px] tracking-[0.2em] uppercase text-[#F4EFEA] bg-[#2A1E17] border border-[#C88A35]/60 hover:border-[#D4AF37] transition-all rounded-sm"
-                >
-                  <span>Residences</span>
-                  <ArrowRight className="w-3 h-3 text-[#D4AF37]" />
-                </Link>
               </div>
-            </div>
+            )}
 
             {/* Checkpoint 3: Frames 76-120 */}
-            <div
-              className={`transition-all duration-500 transform ${
-                isCheckpoint3
-                  ? 'opacity-100 translate-y-0 pointer-events-auto block'
-                  : 'opacity-0 translate-y-4 pointer-events-none hidden'
-              }`}
-            >
-              <div className="border border-[#C88A35]/40 bg-[#1C1410]/80 backdrop-blur-md rounded-lg p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.85)]">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12100E]/90 border border-[#C88A35]/30 mb-2.5">
-                  <Compass className="w-3 h-3 text-[#D4AF37]" />
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-medium">
-                    World-Class Hospitality
-                  </span>
-                </div>
-                <h2 className="font-serif text-2xl sm:text-3xl text-[#F4EFEA] leading-tight mb-2">
-                  Ethiopian Warmth <br />
-                  <span className="italic text-[#D4AF37]">And Diplomatic Prestige</span>
-                </h2>
-                <p className="text-xs text-[#F4EFEA]/80 font-light leading-relaxed mb-4 line-clamp-2 sm:line-clamp-3">
-                  Artisanal coffee ceremonies, gourmet regional gastronomy, and presidential suites tailored for leaders and international travelers.
-                </p>
-                <div className="flex items-center gap-3">
-                  <Link
-                    href="/booking"
-                    className="px-4 py-2 font-serif text-[11px] tracking-[0.2em] uppercase text-[#F4EFEA] bg-[#2A1E17] border border-[#C88A35]/60 hover:border-[#D4AF37] transition-all rounded-sm"
-                  >
-                    Reserve Stay
-                  </Link>
-                  <Link
-                    href="/dining"
-                    className="px-4 py-2 font-serif text-[11px] tracking-[0.2em] uppercase text-[#D4AF37] bg-[#12100E] border border-[#3D2B1F] hover:border-[#C88A35] transition-all rounded-sm"
-                  >
-                    Dining
-                  </Link>
+            {isCheckpoint3 && (
+              <div className="transition-all duration-500 transform opacity-100 translate-y-0 pointer-events-auto">
+                <div className="border border-[#C88A35]/40 bg-[#1C1410]/85 backdrop-blur-md rounded-lg p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.85)]">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12100E]/90 border border-[#C88A35]/30 mb-2.5">
+                    <Compass className="w-3 h-3 text-[#D4AF37]" />
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-medium">
+                      World-Class Hospitality
+                    </span>
+                  </div>
+                  <h2 className="font-serif text-2xl sm:text-3xl text-[#F4EFEA] leading-tight mb-2">
+                    Ethiopian Warmth <br />
+                    <span className="italic text-[#D4AF37]">And Diplomatic Prestige</span>
+                  </h2>
+                  <p className="text-xs text-[#F4EFEA]/80 font-light leading-relaxed mb-4 line-clamp-2 sm:line-clamp-3">
+                    Artisanal coffee ceremonies, gourmet regional gastronomy, and presidential suites tailored for leaders and international travelers.
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <Link
+                      href="/booking"
+                      className="px-4 py-2.5 font-serif text-xs tracking-[0.18em] uppercase text-[#F4EFEA] bg-[#2A1E17] border border-[#C88A35]/60 hover:border-[#D4AF37] transition-all rounded-sm font-medium"
+                    >
+                      Reserve Stay
+                    </Link>
+                    <Link
+                      href="/dining"
+                      className="px-4 py-2.5 font-serif text-xs tracking-[0.18em] uppercase text-[#D4AF37] bg-[#12100E] border border-[#3D2B1F] hover:border-[#C88A35] transition-all rounded-sm font-medium"
+                    >
+                      Dining & Bar
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         )}
 
-        {/* Bottom Control & Status Bar */}
-        <div className="absolute bottom-5 left-0 right-0 z-30 flex items-center justify-between px-4 sm:px-10 pointer-events-auto">
+        {/* Bottom Control & Status Bar (Fades cleanly when scrolling past the sequence) */}
+        <div
+          className={`absolute bottom-5 left-0 right-0 z-30 flex items-center justify-between px-4 sm:px-10 transition-opacity duration-300 ${
+            scrollProgress >= 0.98 ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
+          }`}
+        >
           {/* Left: Frame Badge & Rotating Medallion */}
           <div className="flex items-center gap-3 bg-[#1C1410]/80 border border-[#3D2B1F] px-3.5 py-1.5 rounded-sm backdrop-blur-md shadow-lg">
             <div
