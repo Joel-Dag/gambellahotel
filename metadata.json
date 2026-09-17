@@ -1,0 +1,8 @@
+{
+  "name": "Gambela Hotel",
+  "description": "Experience artisanal Ethiopian luxury, cultural wood craftsmanship, and world-class hospitality at Gambela Hotel in Addis Ababa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

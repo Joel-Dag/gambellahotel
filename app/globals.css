@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #12100E;
+  --foreground: #F4EFEA;
 }
 
 @theme inline {
@@ -10,17 +10,55 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: var(--font-serif);
+  
+  --color-ebony: #12100E;
+  --color-mahogany: #1C1410;
+  --color-walnut: #2A1E17;
+  --color-carved-wood: #3D2B1F;
+  --color-gold: #D4AF37;
+  --color-raw-amber: #C88A35;
+  --color-parchment: #F4EFEA;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #12100E;
+  color: #F4EFEA;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: hidden;
 }
+
+/* Artisanal Carved Wood Texture and Motifs */
+.carved-card {
+  background: linear-gradient(180deg, #1C1410 0%, #16100D 100%);
+  border: 1px solid #3D2B1F;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(212, 175, 55, 0.15);
+}
+
+.carved-card-glow {
+  background: linear-gradient(180deg, rgba(28, 20, 16, 0.95) 0%, rgba(22, 16, 13, 0.95) 100%);
+  border: 2px solid #3D2B1F;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9), inset 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.carved-btn {
+  background: linear-gradient(180deg, #3D2B1F 0%, #1C1410 100%);
+  border: 1px solid rgba(200, 138, 53, 0.5);
+  color: #F4EFEA;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(212, 175, 55, 0.2);
+  transition: all 0.3s ease;
+}
+
+.carved-btn:hover {
+  border-color: #D4AF37;
+  box-shadow: 0 0 20px rgba(200, 138, 53, 0.35), inset 0 1px 2px rgba(212, 175, 55, 0.4);
+  transform: translateY(-1px);
+}
+
+.engraved-heading {
+  background: linear-gradient(135deg, #F4EFEA 0%, #D4AF37 50%, #C88A35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+}
+
