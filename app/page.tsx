@@ -220,9 +220,9 @@ export default function HomePage() {
   ];
 
   return (
-    <main id="main-content" className="min-h-screen bg-[#12100E] text-[#F4EFEA] overflow-x-hidden">
+    <main id="main-content" className="min-h-screen bg-[#12100E] text-[#F4EFEA]">
       {/* 1. HERO SECTION: GSAP SCROLL-DRIVEN CANVAS SEQUENCE */}
-      <section id="hero-sequence-section" className="relative">
+      <section id="hero-sequence-section" className="relative w-full">
         <ScrollCanvasSequence />
       </section>
 
